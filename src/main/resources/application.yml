@@ -1,0 +1,34 @@
+server:
+  port: 8089
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+
+spring:
+  application:
+    name: GATEWAY-SERVICE
+  cloud:
+    gateway:
+      routes:
+        - id: author-service
+          uri: lb://AUTHOR-SERVICE
+          predicates:
+            - Path=/author/**
+          filters:
+            - AuthenticationFilter
+        - id: book-service
+          uri: lb://BOOKS-SERVICE
+          predicates:
+            - Path=/book/**
+          filters:
+            - AuthenticationFilter
+        - id: jwt-auth-service
+          uri: lb://JWT-AUTH-SERVICE
+          predicates:
+            - Path=/auth/**
+
+bezkoder:
+  app:
+    jwtSecret : bezKoderSecretKey
+    jwtExpirationMs : 86400000
