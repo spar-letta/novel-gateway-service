@@ -1,9 +1,9 @@
 server:
   port: 8089
-eureka:
-  client:
-    register-with-eureka: true
-    fetch-registry: true
+#eureka:
+#  client:
+#    register-with-eureka: true
+#    fetch-registry: true
 
 spring:
   application:
@@ -28,7 +28,12 @@ spring:
           predicates:
             - Path=/auth/**
 
-bezkoder:
-  app:
-    jwtSecret : bezKoderSecretKey
-    jwtExpirationMs : 86400000
+eureka:
+  instance:
+    preferIpAddress: true
+    hostname: eureka-0
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    serviceUrl:
+      defaultZone: http://eureka-0.eureka.default.svc.cluster.local:8761/eureka
